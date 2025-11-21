@@ -8,12 +8,25 @@
 from .inspire_hand_defaut import *
 from . import inspire_dds
 from .inspire_sdk import ModbusDataHandler
-from .qt_tabs import ImageTab,MainWindow,CurveTab
+
+# Make GUI imports optional so headless can work without PyQt5
+try:
+    from .qt_tabs import ImageTab, MainWindow, CurveTab
+    _gui_available = True
+except Exception:
+    ImageTab = None
+    MainWindow = None
+    CurveTab = None
+    _gui_available = False
 
 __all__ = [
-	"inspire_dds",
-	"ModbusDataHandler",
-  "ImageTab",
-  "MainWindow",
-  "CurveTab"
+        "inspire_dds",
+        "ModbusDataHandler",
 ]
+
+if _gui_available:
+    __all__ += [
+      "ImageTab",
+      "MainWindow",
+      "CurveTab",
+    ]

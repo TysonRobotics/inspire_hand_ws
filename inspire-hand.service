@@ -1,0 +1,22 @@
+[Unit]
+Description=Inspire Hand Headless Drivers (Left and Right)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=unitree
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/bin/bash -lc '
+  source /home/unitree/robot-os/third_party/inspire_hand_ws/.venv/bin/activate && \
+  nohup python /home/unitree/robot-os/third_party/inspire_hand_ws/inspire_hand_sdk/example/Headless_driver_l.py >/dev/null 2>&1 & \
+  nohup python /home/unitree/robot-os/third_party/inspire_hand_ws/inspire_hand_sdk/example/Headless_driver_r.py >/dev/null 2>&1 & \
+  sleep infinity'
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+
+
